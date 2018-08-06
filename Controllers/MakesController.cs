@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vega.Controllers.Resources;
@@ -28,7 +29,7 @@ namespace Vega.Controllers
         {
             var makes = await _context.Makes.Include(x => x.Models).ToListAsync();
 
-            var makeResource = _mapper.Map<MakeResource>(makes);
+            var makeResource = _mapper.Map<List<MakeResource>>(makes);
 
             return Ok(makeResource);
         }

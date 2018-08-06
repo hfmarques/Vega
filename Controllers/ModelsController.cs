@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vega.Controllers.Resources;
@@ -28,7 +29,7 @@ namespace Vega.Controllers
         {
             var model = _context.Models;
 
-            var modelResource = _mapper.Map<ModelResource>(model);
+            var modelResource = _mapper.Map<List<ModelResource>>(model);
 
             return Ok(modelResource);
         }
