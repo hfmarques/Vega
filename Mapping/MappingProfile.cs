@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Vega.Controllers.Resources;
 using Vega.Models;
+using Vega.Resources;
 
 namespace Vega.Mapping
 {
@@ -10,6 +11,7 @@ namespace Vega.Mapping
         {
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
+            CreateMap<Feature, FeatureResource>();
         }
     }
 }
