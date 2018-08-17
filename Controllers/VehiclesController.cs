@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,13 +41,16 @@ namespace Vega.Controllers
             }
 
             var vehicle = await _context.Vehicles.FindAsync(id);
+            var feature = vehicle.Features.FirstOrDefault();
 
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicle);
+            var vehicleResource = _mapper.Map<VehicleResource>(vehicle);
+
+            return Ok(vehicleResource);
         }
 
         // PUT: api/Vehicles/5
@@ -94,12 +98,15 @@ namespace Vega.Controllers
             }
 
             var vehicle = _mapper.Map<Vehicle>(vehicleResource);
+            vehicle.LastUpdate = DateTime.Now;
 
             _context.Vehicles.Add(vehicle);
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVehicle", new { id = vehicle.Id }, vehicle);
+            var resultMap = _mapper.Map<VehicleResource>(vehicle);
+
+            return CreatedAtAction("GetVehicle", new { id = resultMap.Id }, resultMap);
         }
 
         // DELETE: api/Vehicles/5

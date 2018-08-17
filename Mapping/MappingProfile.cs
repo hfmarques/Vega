@@ -14,7 +14,10 @@ namespace Vega.Mapping
             CreateMap<Model, ModelResource>();
             CreateMap<Feature, FeatureResource>();
             CreateMap<Contact, ContactResource>();
-            CreateMap<Vehicle, VehicleResource>();
+            CreateMap<Vehicle, VehicleResource>()
+                .ForMember(vr => vr.Features, x => x.MapFrom(v => v.Features.Select(vf => vf.FeatureId)));
+
+
 
             CreateMap<VehicleResource, Vehicle>()
                 .ForMember(v => v.Features,
@@ -22,6 +25,7 @@ namespace Vega.Mapping
                     {
                         FeatureId = id
                     })));
+            CreateMap<ContactResource, Contact>();
         }
     }
 }
